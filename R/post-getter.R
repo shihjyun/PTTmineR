@@ -154,3 +154,59 @@ get_post_comment <- function(post.dom) {
 
 }
 
+
+get_post_dt <-
+  function(post.id,
+           min.date = min_date ,
+           miner.env = miner_env$private) {
+    date_invalid <- FALSE
+    error_occur <- FALSE
+    min_date <- min.date
+    miner_env <- miner.env
+    post_id <- post.id
+    target_board <-
+      miner_env$.mutable_obj$target_board # get from pttminer
+    f2_sep_term <-
+      miner_env$.helper_obj$f2_sep_term # get from pttminer
+
+    post_url <-
+      generate_url(board = target_board,
+                   id = post_id,
+                   miner.env = miner_env)
+
+
+    tryCatch({
+      post_dom <- GET(post_url, set_cookies(`over18` = 1L)) %>%
+        content(as = "parsed", encoding = "UTF-8")
+
+      post_info_dt <-
+        get_post_info(post.dom = post_dom)  # potencial error
+      post_comment_dt <- get_post_comment(post.dom = post_dom)
+
+      result_list <- list("post_info_dt" = post_info_dt,
+                          "post_comment_dt" = post_comment_dt)
+    },
+    error = function(cnd) {
+      # message here
+      error_occur <<- TRUE
+    })
+
+    # error/date reporter
+    if (error_occur) {
+      result_list <-  list(
+        "post_info_dt" = NULL,
+        "post_comment_dt" = NULL,
+        "error_url" = post_url,
+        "error_type" = "err_unknow"
+      )
+    } else if (date_invalid) {
+      result_list <-  list(
+        "post_info_dt" = NULL,
+        "post_comment_dt" = NULL,
+        "error_type" = "err_date_inval"
+      )
+    }
+
+
+    return(result_list)
+  }
