@@ -1,11 +1,15 @@
 Package: PTTmineR
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Parallel Searching and Crawling Data from PTT
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Steven",
+           family = "Yeo", 
+           role = c("aut", "cre"),
+           email = "shihjyun.yeo@gmail.com")
+Description: The main purpose of this package is using the more efficient
+            and more simple way to crawl the data from www.ptt.cc, 
+            then let other ones can concentrate on analysis work.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
