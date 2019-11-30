@@ -85,3 +85,72 @@ get_post_info <- function(post.dom) {
   return(post_info)
 
 }
+
+
+
+get_post_comment <- function(post.dom) {
+  par_env <- caller_env()
+  post_dom <- post.dom
+
+  adj_post_dom <- post_dom %>%
+    html_nodes(".f2, .push")
+
+
+  f2_pos <-
+    min(grep(par_env$f2_sep_term, adj_post_dom, fixed = TRUE))
+
+  # handle another ip format problem eg.'Gossiping/M.1574519359.A.7F4'
+  if (is.infinite(f2_pos)) {
+    f2_pos <-
+      min(grep(str_c("※ 編輯: ", par_env$post_author), adj_post_dom, fixed = TRUE))
+  }
+
+  start_pos <- f2_pos
+  adj_post_dom <- adj_post_dom[-(1:start_pos)]
+
+
+  push_type <- adj_post_dom %>%
+    html_nodes(".push-tag") %>%
+    html_text(trim = TRUE)
+
+  push_id <- adj_post_dom %>%
+    html_nodes(".push-userid") %>%
+    html_text(trim = TRUE)
+
+  push_content <- adj_post_dom %>%
+    html_nodes(".push-content") %>%
+    html_text(trim = TRUE) %>%
+    str_sub(start = 3L)
+
+  push_ipdatetime_set <- adj_post_dom %>%
+    html_nodes(".push-ipdatetime") %>%
+    html_text(trim = TRUE)
+
+  push_ip <-
+    str_extract(push_ipdatetime_set, "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+")
+
+  # post_info_list is super scope variable
+  push_date_time <-
+    str_extract(push_ipdatetime_set, "[0-9]+/[0-9]+ [0-9]+:[0-9]+") %>%
+    convert_time(convert.type = "comment",
+                 post.date = par_env$post_info_dt[["post_date_time"]]) %>%
+    modify_year()
+
+
+  # Resolve the problem that some post would repost other push comment
+  # from the otherside, so need to find the real push comment tag below
+  # the separate tag.
+
+  post_comment_info <- data.table(
+    "post_id" = par_env$post_id,
+    "push_type" = push_type,
+    "push_id" = push_id,
+    "push_content" = push_content,
+    "push_ip" = push_ip,
+    "push_date_time" = push_date_time
+  )
+
+  return(post_comment_info)
+
+}
+
