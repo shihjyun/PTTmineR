@@ -1,10 +1,6 @@
 Package: PTTmineR
 Type: Package
-<<<<<<< HEAD
 Title: Parallel Crawling and Searching Data from PTT
-=======
-Title: Parallel Searching and Crawling Data from PTT
->>>>>>> origin/master
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Steven",
@@ -12,12 +8,8 @@ Authors@R:
            role = c("aut", "cre"),
            email = "shihjyun.yeo@gmail.com")
 Description: The main purpose of this package is using the more efficient
-            and more simple way to crawl the data from www.ptt.cc, 
-<<<<<<< HEAD
+            and more simple way to crawl the data from www.ptt.cc,
             then let other ones can concentrate on analysis part.
-=======
-            then let other ones can concentrate on analysis work.
->>>>>>> origin/master
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
