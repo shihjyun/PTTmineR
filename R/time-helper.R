@@ -31,3 +31,29 @@ convert_time <- function(date.time.char, convert.type, post.date) {
   return(convert_result)
 
 }
+
+
+modify_year <- function(raw.time.vec) {
+  diff_pos <-
+    which((raw.time.vec[2:length(raw.time.vec)] - raw.time.vec[1:length(raw.time.vec) -
+                                                                 1]) < 0)
+
+  if (identical(diff_pos, integer(0))) {
+    return(raw.time.vec)
+
+  } else {
+    for (i in seq_along(diff_pos)) {
+      if (i == max(seq_along(diff_pos))) {
+        year(raw.time.vec[(diff_pos[i] + 1):length(raw.time.vec)]) <-
+          year(raw.time.vec[diff_pos[i]]) + 1
+
+      } else {
+        year(raw.time.vec[(diff_pos[i] + 1):diff_pos[i + 1]]) <-
+          year(raw.time.vec[diff_pos[i]]) + 1
+
+      }
+    }
+    return(raw.time.vec)
+  }
+
+}
