@@ -37,6 +37,9 @@ PTTmineR <- R6::R6Class(
       }
 
       private$.meta_obj$task_name <- task.name
+      private$.spinner$mine_monkey <- make_spinner(which = "monkey")
+      private$.spinner$update_runner <- make_spinner(which = "runner")
+
 
       self$result_dt$post_info_dt <-
         data.table(
@@ -101,7 +104,7 @@ PTTmineR <- R6::R6Class(
     .mutable_obj = list(target_board = NULL),
     .error_log = list(error_occur = FALSE,
                       error_url = NULL),
-    .spinner = list(mine_monkey = make_spinner(which = "monkey"),
-                    update_runner = make_spinner(which = "runner"))
+    .spinner = list(mine_monkey = NULL,
+                    update_runner = NULL)
   )
 )
