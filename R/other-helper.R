@@ -11,8 +11,8 @@ cli_miner_create <- function(){
   cli_par()
   cli_alert_success("Miner is created successfully!")
   cli_end()
-  cli_text("Note that you don’t need to assign the result back to a variable when you
-                    do following actions. {.pkg PTTmineR}'s functions are modified by reference.")
+  cli_text("Note that you don't need to assign the result back to a variable when you do the following actions.
+           {.pkg PTTmineR}'s functions are modified by reference.")
   cli_par()
   cli_li(c(
     " Crawl the data from {.url www.ptt.cc}: {.code mine_ptt()}",
