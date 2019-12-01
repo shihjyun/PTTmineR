@@ -115,16 +115,20 @@ mine_ptt <- function(ptt.miner,
     # actually ptt.miner is lhs in pipe
     chain_env <- find_env("chain_parts")
 
-    if (!any(class(chain_env$env$`_lhs`) %in% "PTTmineR")) {
-      abort("The class of ptt.miner is not 'PTTmineR'!")
+    if (!identical(chain_env, .GlobalEnv)) {
+      # the situation that user is using pipe
+      if (!any(class(chain_env$env$`_lhs`) %in% "PTTmineR")) {
+        abort("The class of ptt.miner is not 'PTTmineR'!")
+      }
+
+      root_miner_env <- chain_env$env$`_lhs`$.__enclos_env__
+    } else {
+      # the situation that user is not using pipe
+      root_miner_env <- ptt.miner$.__enclos_env__
     }
 
     origin_set <- getOption("warn")
     options(warn = -1)
-
-
-    # let all functions can access miner's scope
-    root_miner_env <- chain_env$env$`_lhs`$.__enclos_env__
 
 
     generate_url(
@@ -173,16 +177,20 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
   if (!is.character(update.post.id))
     abort_bad_argument("update.post.id", must = "be character", not = update.post.id)
 
-  update_post_id <- update.post.id
-
   # actually ptt.miner is lhs in pipe
   chain_env <- find_env("chain_parts")
 
-  if (!any(class(chain_env$env$`_lhs`) %in% "PTTmineR")) {
-    abort("The class of ptt.miner is not 'PTTmineR'!")
-  }
+  if (!identical(chain_env, .GlobalEnv)) {
+    # the situation that user is using pipe
+    if (!any(class(chain_env$env$`_lhs`) %in% "PTTmineR")) {
+      abort("The class of ptt.miner is not 'PTTmineR'!")
+    }
 
-  root_miner_env <- chain_env$env$`_lhs`$.__enclos_env__
+    root_miner_env <- chain_env$env$`_lhs`$.__enclos_env__
+  } else {
+    # the situation that user is not using pipe
+    root_miner_env <- ptt.miner$.__enclos_env__
+  }
 
   # check update_post_id are within ptt.miner
   update_pos <-
@@ -259,18 +267,27 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
 #' @md
 
 export_ptt <- function(ptt.miner, export.type = character(), obj.name = character()) {
-  chain_env <- find_env("chain_parts")
-  # actually ptt.miner is lhs in pipe
-
-  if (!any(class(chain_env$env$`_lhs`) %in% "PTTmineR")) {
-    abort("The class of ptt.miner is not 'PTTmineR'!")
-  }
 
   if (!(export.type %in% c("dt", "tbl", "nested_tbl"))) {
     abort("The selected type is not acceptable.")
   }
 
-  root_miner_env <- chain_env$env$`_lhs`$.__enclos_env__
+  # actually ptt.miner is lhs in pipe
+  chain_env <- find_env("chain_parts")
+
+  if (!identical(chain_env, .GlobalEnv)) {
+    # the situation that user is using pipe
+    if (!any(class(chain_env$env$`_lhs`) %in% "PTTmineR")) {
+      abort("The class of ptt.miner is not 'PTTmineR'!")
+    }
+
+    root_miner_env <- chain_env$env$`_lhs`$.__enclos_env__
+  } else {
+    # the situation that user is not using pipe
+    root_miner_env <- ptt.miner$.__enclos_env__
+  }
+
+
   full_export_type <- str_c("export_", export.type)
 
   get(full_export_type)(obj.name, miner.env = root_miner_env)
