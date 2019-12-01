@@ -61,36 +61,47 @@
 #' @md
 mine_ptt <- function(ptt.miner,
            board = NULL,
-           keyword = character(),
-           author = character(),
-           recommend = numeric(),
-           min.date = character(),
-           last.n.page = numeric()) {
+           keyword = NULL,
+           author = NULL,
+           recommend = NULL,
+           min.date = NULL,
+           last.n.page = NULL) {
+
     # check all arguments are correct type
-    if (!is.character(board))
+    if (is.character(board) | is.null(board)){NULL} else {
       abort_bad_argument("board", must = "be character", not = board)
+    }
 
-    if (!is.character(keyword))
+    if (is.character(keyword) | is.null(keyword)){NULL} else {
       abort_bad_argument("keyword", must = "be character", not = keyword)
+    }
 
-    if (!is.character(author))
+    if (is.character(author) | is.null(author)){NULL} else {
       abort_bad_argument("author", must = "be character", not = author)
+    }
 
-    if (!is.numeric(recommend))
+    if (is.numeric(recommend) | is.null(recommend)){NULL} else {
       abort_bad_argument("recommend", must = "be numeric", not = recommend)
+    }
 
-    if (!is.character(min.date))
+    if (is.character(min.date) | is.null(min.date)){NULL} else {
       abort_bad_argument("min.date", must = "be character", not = min.date)
+    }
 
-    if (!is.numeric(last.n.page))
+    if (is.numeric(last.n.page) | is.null(last.n.page)){NULL} else {
       abort_bad_argument("last.n.page", must = "be numeric", not = last.n.page)
+    }
 
     # check arguments are reasonable
-    if (last.n.page < 1)
-      abort_bad_argument("last.n.page", must = "greater than one")
+    if (!is.null(last.n.page) & is.numeric(last.n.page)){
+      if (last.n.page < 1) {
+        abort_bad_argument("last.n.page", must = "greater than one")
+      }
+    }
 
-    if (is.null(board))
+    if (is.null(board)){
       abort_bad_argument("board", must = "be set")
+    }
 
     if (!is.null(min.date)) {
       tryCatch(
@@ -123,7 +134,7 @@ mine_ptt <- function(ptt.miner,
       recommend = recommend,
       miner.env = root_miner_env$private
     ) %>%
-      get_all_posts(last.n.page = last.n.page, min.date, miner.env = root_miner_env)
+      get_all_posts(last.n.page = last.n.page, min.date = min.date, miner.env = root_miner_env)
 
 
     root_miner_env$private$.meta_obj$last_crawl_date <- Sys.Date()

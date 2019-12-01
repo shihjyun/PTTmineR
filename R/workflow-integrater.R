@@ -21,7 +21,6 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
 
   # the interator to get post id
   for (i in for_count_max) {
-    miner_env$private$.spinner$mine_monkey$spin(template = "{spin}PTTmineR mining from ptt on your setting ...")
 
     index_req <- GET(index_page_url, set_cookies(`over18` = 1L))
     if (index_req$status_code == 404) {
@@ -50,7 +49,8 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
 
     if (identical(add_post_id, character(0))) {
       # no result searching
-      cli_alert_danger("There're no result for your search! pls try again!")
+      cnd_break <- TRUE
+      cli_alert_danger("There're no result on your search! pls try again!")
       break
     } else {
       # check duplicated post id
@@ -58,6 +58,7 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
       if (identical(add_post_id, character(0))) next
     }
 
+    miner_env$private$.spinner$mine_monkey$spin(template = "{spin}PTTmineR mining from ptt on your setting ...")
 
     # parallel excution
     tmp_post_result <- future_pmap(list(post.id = add_post_id),
@@ -101,7 +102,10 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
 
   }
 
-  miner_env$private$.spinner$mine_monkey$spin("{spin}PTTmineR mining from ptt on your setting ... DONE")
+  if (!cnd_break) {
+    miner_env$private$.spinner$mine_monkey$spin("{spin}PTTmineR mining from ptt on your setting ... DONE")
+  }
+
 
   if ((miner_env$self$result_dt$post_info_dt$post_id == "dummy") & (nrow(miner_env$self$result_dt$post_info_dt)>1)) {
     # remove the first dummy row !

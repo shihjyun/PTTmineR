@@ -7,11 +7,11 @@
 mine_ptt(
   ptt.miner,
   board = NULL,
-  keyword = character(),
-  author = character(),
-  recommend = numeric(),
-  min.date = character(),
-  last.n.page = numeric()
+  keyword = NULL,
+  author = NULL,
+  recommend = NULL,
+  min.date = NULL,
+  last.n.page = NULL
 )
 }
 \arguments{
