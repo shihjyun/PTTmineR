@@ -4,7 +4,7 @@
 \alias{export_ptt}
 \title{Export data store in miner_object for you to analyze.}
 \usage{
-export_ptt(ptt.miner, export.type, obj.name)
+export_ptt(ptt.miner, export.type = character(), obj.name = character())
 }
 \arguments{
 \item{ptt.miner}{a R6 class object uses \code{PTTmineR$new()} to create.}

@@ -4,7 +4,7 @@
 \alias{update_ptt}
 \title{Update the post comments have been crawled.}
 \usage{
-update_ptt(ptt.miner, update.post.id)
+update_ptt(ptt.miner, update.post.id = character())
 }
 \arguments{
 \item{ptt.miner}{a R6 class object uses `PTTmineR$new()` to create.}

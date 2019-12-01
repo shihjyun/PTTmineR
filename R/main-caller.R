@@ -61,11 +61,11 @@
 #' @md
 mine_ptt <- function(ptt.miner,
            board = NULL,
-           keyword = NULL,
-           author = NULL,
-           recommend = NULL,
-           min.date = NULL,
-           last.n.page = NULL) {
+           keyword = character(),
+           author = character(),
+           recommend = numeric(),
+           min.date = character(),
+           last.n.page = numeric()) {
     # check all arguments are correct type
     if (!is.character(board))
       abort_bad_argument("board", must = "be character", not = board)
@@ -157,7 +157,7 @@ mine_ptt <- function(ptt.miner,
 #' @importFrom furrr future_pmap
 #' @importFrom data.table rbindlist
 #' @export
-update_ptt <- function(ptt.miner, update.post.id) {
+update_ptt <- function(ptt.miner, update.post.id = character()) {
   # check arguments are correct type
   if (!is.character(update.post.id))
     abort_bad_argument("update.post.id", must = "be character", not = update.post.id)
@@ -247,7 +247,7 @@ update_ptt <- function(ptt.miner, update.post.id) {
 #' @export
 #' @md
 
-export_ptt <- function(ptt.miner, export.type, obj.name) {
+export_ptt <- function(ptt.miner, export.type = character(), obj.name = character()) {
   chain_env <- find_env("chain_parts")
   # actually ptt.miner is lhs in pipe
 
