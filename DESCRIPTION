@@ -31,4 +31,5 @@ Imports:
     rvest,
     stringr,
     tibble,
-    stats
+    stats,
+    future
