@@ -10,6 +10,6 @@ Authors@R:
 Description: The main purpose of this package is using the more efficient
             and more simple way to crawl the data from www.ptt.cc,
             then let other ones can concentrate on analysis part.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
