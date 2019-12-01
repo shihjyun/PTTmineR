@@ -1,13 +1,72 @@
 
-mine_ptt <-
-  function(ptt.miner,
+#' @title
+#' Crawl the selected board post and store into PTTmineR.
+#'
+#' @description
+#' You can use following arguments to get/filter the
+#' PTT post data you want. Note that you need at least
+#' choose which board you want to crawl.
+#'
+#' @param ptt.miner a R6 class object uses `PTTmineR$new()` to create.
+#' @param board a string. PTT board you want to crawl.
+#' @param keyword a string. The keyword you want to search on selected board.
+#' @param author a string. The post author you want to search on selected board.
+#' @param recommend a number. The number of net recommend you want to filter.
+#' @param min.date a date format string. The farthest date you want to set.
+#' @param last.n.page a number. The number of page you wnat to crawl.
+#'
+#' @return
+#' - post_info_dt: the data.table type post's information.
+#' - post_comment_dt: the data.table type post's comments.
+#' The result is store in miner_object$result_dt, but my
+#' suggestion is don't modify the data in miner_object, use
+#' `export_ptt()` to get and analysis your data.
+#'
+#' @examples
+#'
+#' # assume that rookie_miner is an object using `PTTmineR$new()` to create
+#' # get all Gossiping posts
+#' rookie_miner %>%
+#'     mine_ptt(board = "Gossiping")
+#'
+#' # get all Gossiping posts to filter by keyword 'youtuber'
+#' rookie_miner %>%
+#'     mine_ptt(board = "Gossiping", keyword = "youtuber")
+#'
+#' # get all Gossiping posts to filter by keyword 'youtuber' and
+#' # net recommend nuber 10.
+#' rookie_miner %>%
+#'     mine_ptt(board = "Gossiping", recommend = 10)
+#'
+#' # if you want to do multiple crawling task on one eval,
+#' # you can use multiple `%>%` :
+#' rookie_miner %>%
+#'     mine_ptt(board = "Gossiping", recommend = 10) %>%
+#'     mine_ptt(board = "Soft_job", keyword = "python")
+#'
+#' # or use `purrr::pwalk()`:
+#' board_list <- c("Gossiping", "Soft_job", "Beauty")
+#' pwalk(board_list, ~mine_ptt(board = .x, recommend = 10))
+#' # why `pwalk()`? because all PTTmineR's functions are
+#' # side-effect funciton. The data will return to rookie_miner.
+#'
+#'
+#'
+#' @importFrom rlang abort
+#' @importFrom magrittr %>%
+#' @importFrom prettyunits pretty_bytes
+#' @importFrom lobstr object_size
+#'
+#' @export
+#' @md
+mine_ptt <- function(ptt.miner,
            board = NULL,
            keyword = NULL,
            author = NULL,
            recommend = NULL,
            min.date = NULL,
            last.n.page = NULL) {
-    # check arguments are correct type
+    # check all arguments are correct type
     if (!is.character(board))
       abort_bad_argument("board", must = "be character", not = board)
 
@@ -83,6 +142,20 @@ mine_ptt <-
   }
 
 
+#' @title
+#' Update the post comments have been crawled.
+#'
+#' @param ptt.miner a R6 class object uses `PTTmineR$new()` to create.
+#' @param update.post.id the charactar vector post id you want to update.
+#'
+#' @examples
+#' # get the post id set from rookie_miner
+#' update_id <- rookie_miner$result_dt$post_info_dt$post_id
+#' # update the post comments from selected post id
+#' rookie_miner %>%
+#'     update_ptt(update.post.id = update_id)
+#'
+#' @export
 update_ptt <- function(ptt.miner, update.post.id) {
   # check arguments are correct type
   if (!is.character(update.post.id))
@@ -141,6 +214,16 @@ update_ptt <- function(ptt.miner, update.post.id) {
 }
 
 
+#' Title
+#'
+#' @param ptt.miner
+#' @param export.type
+#' @param obj.name
+#'
+#' @return
+#' @export
+#'
+#' @examples
 export_ptt <- function(ptt.miner, export.type, obj.name) {
   chain_env <- find_env("chain_parts")
   # actually ptt.miner is lhs in pipe
