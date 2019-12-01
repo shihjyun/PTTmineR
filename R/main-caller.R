@@ -151,10 +151,12 @@ mine_ptt <- function(ptt.miner,
 #' @examples
 #' # get the post id set from rookie_miner
 #' update_id <- rookie_miner$result_dt$post_info_dt$post_id
+#'
 #' # update the post comments from selected post id
 #' rookie_miner %>%
 #'     update_ptt(update.post.id = update_id)
-#'
+#' @importFrom furrr future_pmap
+#' @importFrom data.table rbindlist
 #' @export
 update_ptt <- function(ptt.miner, update.post.id) {
   # check arguments are correct type
@@ -214,16 +216,38 @@ update_ptt <- function(ptt.miner, update.post.id) {
 }
 
 
-#' Title
+#' @title
+#' Export data store in miner_object for you to analyze.
 #'
-#' @param ptt.miner
-#' @param export.type
-#' @param obj.name
+#' @description
+#' There're three export types you can choose:
+#' - dt: the type of data.table
+#' - tbl: the type of tibble (like data.frame but more better)
+#' - nested_tbl: the type of nested tibble (just return one table)
+#'
+#' @param ptt.miner a R6 class object uses `PTTmineR$new()` to create.
+#' @param export.type a string. the three export types in description part.
+#' @param obj.name a string. the global object name you want to name.
 #'
 #' @return
-#' @export
+#' `export_ptt()` is a side-effect function also. After you excute
+#' this function, you will get the object name 'obj.name' in your
+#' global environment.
 #'
 #' @examples
+#' # export data into global environment.
+#' rookie_miner %>%
+#'     export_ptt(export.type = "dt", obj.name = "my_ptt_data")
+#'
+#' # then you can call the object you name in the global environment.
+#' my_ptt_data
+#'
+#' @import rlang
+#' @importFrom stringr str_c
+#' @export
+#' @md
+#'
+
 export_ptt <- function(ptt.miner, export.type, obj.name) {
   chain_env <- find_env("chain_parts")
   # actually ptt.miner is lhs in pipe
