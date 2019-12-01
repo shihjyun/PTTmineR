@@ -1,7 +1,32 @@
+#' @title
+#' Create a PTTmineR object
+#'
+#' @description
+#' Imaging that PTTmineR object is a data center. You can store the data
+#'  on each crawling task. This design method is to make it easier for
+#'  users to manage the data they crawl on each crawling task.
+#'
+#' @param task.name a string. the name of miner's task
+#'
+#' @examples
+#' # create PTTmineR object
+#' rookie_miner <- PTTmineR$new(task.name = "first_task")
+#'
+#' # print the summary information of rookie_miner
+#' rookie_miner
+#'
+#' @export
+#' @md
+
+
 PTTmineR <- R6::R6Class(
   classname = "PTTmineR",
   lock_objects = FALSE,
   public = list(
+    #' @description
+    #' overrides the default behaviour of `$new()`
+    #'
+    #' @param task.name a string. the name of miner's task
     initialize = function(task.name) {
 
       if (!is.character(task.name)) {
@@ -36,8 +61,16 @@ PTTmineR <- R6::R6Class(
 
 
     },
+
+    #' @field result_dt
+    #'  a list of following result data.table:
+    #' - post_info_dt: the data.table type post's information.
+    #' - post_comment_dt: the data.table type post's comments.
     result_dt = list(post_info_dt = NULL,
                      post_comment_dt = NULL),
+
+    #' @description
+    #' print the summary information of PTTmineR object
     print = function(){
       cli_rule(center = " * PTTMINER * ")
       cli_li("task name: {private$.meta_obj$task_name}")
