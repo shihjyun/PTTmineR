@@ -26,27 +26,27 @@
 #'
 #' # assume that rookie_miner is an object using `PTTmineR$new()` to create
 #' # get all Gossiping posts
-#' rookie_miner %>%
-#'     mine_ptt(board = "Gossiping")
+#' \dontrun{rookie_miner %>%
+#'     mine_ptt(board = "Gossiping")}
 #'
 #' # get all Gossiping posts to filter by keyword 'youtuber'
-#' rookie_miner %>%
-#'     mine_ptt(board = "Gossiping", keyword = "youtuber")
+#' \dontrun{rookie_miner %>%
+#'     mine_ptt(board = "Gossiping", keyword = "youtuber")}
 #'
 #' # get all Gossiping posts to filter by keyword 'youtuber' and
 #' # net recommend nuber 10.
-#' rookie_miner %>%
-#'     mine_ptt(board = "Gossiping", recommend = 10)
+#' \dontrun{rookie_miner %>%
+#'     mine_ptt(board = "Gossiping", recommend = 10)}
 #'
 #' # if you want to do multiple crawling task on one eval,
 #' # you can use multiple `%>%` :
-#' rookie_miner %>%
+#' \dontrun{rookie_miner %>%
 #'     mine_ptt(board = "Gossiping", recommend = 10) %>%
-#'     mine_ptt(board = "Soft_job", keyword = "python")
+#'     mine_ptt(board = "Soft_job", keyword = "python")}
 #'
 #' # or use `purrr::pwalk()`:
-#' board_list <- c("Gossiping", "Soft_job", "Beauty")
-#' pwalk(board_list, ~mine_ptt(board = .x, recommend = 10))
+#' \dontrun{board_list <- c("Gossiping", "Soft_job", "Beauty")
+#' pwalk(board_list, ~mine_ptt(board = .x, recommend = 10))}
 #' # why `pwalk()`? because all PTTmineR's functions are
 #' # side-effect funciton. The data will return to rookie_miner.
 #'
@@ -121,7 +121,6 @@ mine_ptt <- function(ptt.miner,
       keyword = keyword,
       author = author,
       recommend = recommend,
-      id = id,
       miner.env = root_miner_env$private
     ) %>%
       get_all_posts(last.n.page = last.n.page, min.date, miner.env = root_miner_env)
@@ -150,11 +149,11 @@ mine_ptt <- function(ptt.miner,
 #'
 #' @examples
 #' # get the post id set from rookie_miner
-#' update_id <- rookie_miner$result_dt$post_info_dt$post_id
+#' \dontrun{update_id <- rookie_miner$result_dt$post_info_dt$post_id}
 #'
 #' # update the post comments from selected post id
-#' rookie_miner %>%
-#'     update_ptt(update.post.id = update_id)
+#' \dontrun{rookie_miner %>%
+#'     update_ptt(update.post.id = update_id)}
 #' @importFrom furrr future_pmap
 #' @importFrom data.table rbindlist
 #' @export
@@ -205,7 +204,7 @@ update_ptt <- function(ptt.miner, update.post.id) {
 
   # remove the original post_id (this is not the best efficient way to remove row)
   root_miner_env$self$result_dt$post_comment_dt <-
-    root_miner_env$self$result_dt$post_comment_dt[!(post_id %in% update_post_id)]
+    root_miner_env$self$result_dt$post_comment_dt[!(root_miner_env$self$result_dt$post_comment_dt$post_id %in% update_post_id)]
   # bind the updated comment into ptt.miner comment data.table
   root_miner_env$self$result_dt$post_comment_dt <-
     rbindlist(list(
@@ -236,17 +235,17 @@ update_ptt <- function(ptt.miner, update.post.id) {
 #'
 #' @examples
 #' # export data into global environment.
-#' rookie_miner %>%
+#' \dontrun{rookie_miner %>%
 #'     export_ptt(export.type = "dt", obj.name = "my_ptt_data")
+#'     }
 #'
 #' # then you can call the object you name in the global environment.
-#' my_ptt_data
+#' \dontrun{my_ptt_data}
 #'
 #' @import rlang
 #' @importFrom stringr str_c
 #' @export
 #' @md
-#'
 
 export_ptt <- function(ptt.miner, export.type, obj.name) {
   chain_env <- find_env("chain_parts")
