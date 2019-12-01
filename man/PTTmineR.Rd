@@ -10,10 +10,10 @@ users to manage the data they crawl on each crawling task.
 }
 \examples{
 # create PTTmineR object
-rookie_miner <- PTTmineR$new(task.name = "first_task")
+\dontrun{rookie_miner <- PTTmineR$new(task.name = "first_task")}
 
 # print the summary information of rookie_miner
-rookie_miner
+\dontrun{rookie_miner}
 
 }
 \section{Public fields}{

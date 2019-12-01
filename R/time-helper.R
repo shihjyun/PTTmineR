@@ -1,3 +1,4 @@
+#
 # There's the problem that the comments' date-time of each post doesn't have the year tag,
 # so the parser needs to customize to resolve this problem.
 #
@@ -5,6 +6,8 @@
 # 1. The post's year is the benchmark of the comment year.
 # 2. The n+1th comment date-time is grater than/same as the nth comment date time.
 # 3. If n+1th comment date-time is lesser than the nth comment date-time, the post year must plus 1.
+#'
+#' @importFrom lubridate year
 
 convert_time <- function(date.time.char, convert.type, post.date) {
   convert_format <- list(post = "%b %e %H:%M:%S %Y",
@@ -44,12 +47,12 @@ modify_year <- function(raw.time.vec) {
   } else {
     for (i in seq_along(diff_pos)) {
       if (i == max(seq_along(diff_pos))) {
-        year(raw.time.vec[(diff_pos[i] + 1):length(raw.time.vec)]) <-
-          year(raw.time.vec[diff_pos[i]]) + 1
+        lubridate::year(raw.time.vec[(diff_pos[i] + 1):length(raw.time.vec)]) <-
+          lubridate::year(raw.time.vec[diff_pos[i]]) + 1
 
       } else {
-        year(raw.time.vec[(diff_pos[i] + 1):diff_pos[i + 1]]) <-
-          year(raw.time.vec[diff_pos[i]]) + 1
+        lubridate::year(raw.time.vec[(diff_pos[i] + 1):diff_pos[i + 1]]) <-
+          lubridate::year(raw.time.vec[diff_pos[i]]) + 1
 
       }
     }

@@ -1,3 +1,9 @@
+#' @importFrom rvest html_nodes html_text
+#' @importFrom stringr str_split str_extract str_replace_all str_sub
+#' @importFrom httr GET content
+
+
+
 get_post_info <- function(post.dom) {
   par_env <- caller_env()
   post_dom <- post.dom

@@ -16,9 +16,9 @@ Update the post comments have been crawled.
 }
 \examples{
 # get the post id set from rookie_miner
-update_id <- rookie_miner$result_dt$post_info_dt$post_id
+\dontrun{update_id <- rookie_miner$result_dt$post_info_dt$post_id}
 
 # update the post comments from selected post id
-rookie_miner \%>\%
-    update_ptt(update.post.id = update_id)
+\dontrun{rookie_miner \%>\%
+    update_ptt(update.post.id = update_id)}
 }

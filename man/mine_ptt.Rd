@@ -47,27 +47,27 @@ choose which board you want to crawl.
 
 # assume that rookie_miner is an object using `PTTmineR$new()` to create
 # get all Gossiping posts
-rookie_miner \%>\%
-    mine_ptt(board = "Gossiping")
+\dontrun{rookie_miner \%>\%
+    mine_ptt(board = "Gossiping")}
 
 # get all Gossiping posts to filter by keyword 'youtuber'
-rookie_miner \%>\%
-    mine_ptt(board = "Gossiping", keyword = "youtuber")
+\dontrun{rookie_miner \%>\%
+    mine_ptt(board = "Gossiping", keyword = "youtuber")}
 
 # get all Gossiping posts to filter by keyword 'youtuber' and
 # net recommend nuber 10.
-rookie_miner \%>\%
-    mine_ptt(board = "Gossiping", recommend = 10)
+\dontrun{rookie_miner \%>\%
+    mine_ptt(board = "Gossiping", recommend = 10)}
 
 # if you want to do multiple crawling task on one eval,
 # you can use multiple `\%>\%` :
-rookie_miner \%>\%
+\dontrun{rookie_miner \%>\%
     mine_ptt(board = "Gossiping", recommend = 10) \%>\%
-    mine_ptt(board = "Soft_job", keyword = "python")
+    mine_ptt(board = "Soft_job", keyword = "python")}
 
 # or use `purrr::pwalk()`:
-board_list <- c("Gossiping", "Soft_job", "Beauty")
-pwalk(board_list, ~mine_ptt(board = .x, recommend = 10))
+\dontrun{board_list <- c("Gossiping", "Soft_job", "Beauty")
+pwalk(board_list, ~mine_ptt(board = .x, recommend = 10))}
 # why `pwalk()`? because all PTTmineR's functions are
 # side-effect funciton. The data will return to rookie_miner.
 

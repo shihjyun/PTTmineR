@@ -1,7 +1,7 @@
 
 
 generate_url <- function(board = NULL, keyword = NULL, author = NULL,
-                         recommend = NULL, id = NULL, miner.env = root_miner_env$private){
+                         recommend = NULL, id = NULL, miner.env){
 
   miner_env <- miner.env
   miner_env$.mutable_obj$target_board <- board # set up pttminer

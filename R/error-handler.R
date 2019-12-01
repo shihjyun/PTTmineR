@@ -1,4 +1,4 @@
-
+#' @importFrom glue glue
 
 ptt_cnd_handler <- function(error.type, miner.env = NULL, ...){
 
@@ -27,10 +27,10 @@ err_final_page <- function(miner.env){
 
 
 abort_bad_argument <- function(arg, must, not = NULL) {
-  msg <- glue::glue("`{arg}` must {must}")
+  msg <- glue("`{arg}` must {must}")
   if (!is.null(not)) {
     not <- typeof(not)
-    msg <- glue::glue("{msg}; not {not}.")
+    msg <- glue("{msg}; not {not}.")
   }
 
   abort("error_bad_argument",

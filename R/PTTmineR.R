@@ -10,11 +10,14 @@
 #'
 #' @examples
 #' # create PTTmineR object
-#' rookie_miner <- PTTmineR$new(task.name = "first_task")
+#' \dontrun{rookie_miner <- PTTmineR$new(task.name = "first_task")}
 #'
 #' # print the summary information of rookie_miner
-#' rookie_miner
+#' \dontrun{rookie_miner}
 #'
+#' @import cli
+#' @importFrom data.table data.table
+#' @importFrom R6 R6Class
 #' @export
 #' @md
 

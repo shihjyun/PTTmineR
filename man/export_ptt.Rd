@@ -28,10 +28,11 @@ There're three export types you can choose:
 }
 \examples{
 # export data into global environment.
-rookie_miner \%>\%
+\dontrun{rookie_miner \%>\%
     export_ptt(export.type = "dt", obj.name = "my_ptt_data")
+    }
 
 # then you can call the object you name in the global environment.
-my_ptt_data
+\dontrun{my_ptt_data}
 
 }

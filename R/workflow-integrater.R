@@ -1,5 +1,13 @@
+#'
+#' @importFrom httr modify_url set_cookies
+#' @importFrom stringr str_detect str_match
+#' @importFrom rvest html_attr
+#' @importFrom furrr future_pmap
+#' @importFrom purrr transpose walk
+#' @importFrom data.table set
+#' @importFrom stats na.omit
 
-get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env = root_miner_env) {
+get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
 
   # preparation
   cnd_break <- FALSE
@@ -72,8 +80,9 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env = roo
     index_page_url <- index_page %>%
       html_nodes('a[class="btn wide"], a[class="btn wide disabled"]') %>%
       html_attr('href') %>%
-      `[[`(2) %>%
-      str_c(ptt_url, .)
+      `[[`(2)
+
+    index_page_url <- str_c(ptt_url, index_page_url)
 
     if (is.na(index_page_url)) {
       ptt_cnd_handler(error.type = "err_final_page")
