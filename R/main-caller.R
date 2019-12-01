@@ -55,7 +55,7 @@
 #' @importFrom rlang abort
 #' @importFrom magrittr %>%
 #' @importFrom prettyunits pretty_bytes
-#' @importFrom lobstr object_size
+#' @importFrom lobstr obj_size
 #'
 #' @export
 #' @md
