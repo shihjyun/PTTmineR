@@ -47,7 +47,7 @@ get_post_info <- function(post.dom) {
   # handle another ip format problem eg.'Gossiping/M.1574519359.A.7F4'
   if (is.infinite(f2_pos)) {
     f2_pos <-
-      min(grep(str_c("※ 編輯: ", post_author), f2_set, fixed = TRUE))
+      min(grep(str_c("\u203b \u7de8\u8f2f: ", post_author), f2_set, fixed = TRUE))
   }
 
   post_ip_country <- f2_set[[f2_pos]] %>%
@@ -68,7 +68,7 @@ get_post_info <- function(post.dom) {
 
   start_pos <-
     max(grep('<span class="article-meta-value">', adj_post_dom , fixed = TRUE))
-  end_pos <- min(grep("※ 發信站:|文章網址:|※ 編輯:", adj_post_dom))
+  end_pos <- min(grep("\u203b \u767c\u4fe1\u7ad9:|\u6587\u7ae0\u7db2\u5740:|\u203b \u7de8\u8f2f:", adj_post_dom))
 
   post_content <- adj_post_dom[(start_pos + 1):(end_pos - 1)] %>%
     html_text(trim = TRUE) %>%
@@ -108,7 +108,7 @@ get_post_comment <- function(post.dom) {
   # handle another ip format problem eg.'Gossiping/M.1574519359.A.7F4'
   if (is.infinite(f2_pos)) {
     f2_pos <-
-      min(grep(str_c("※ 編輯: ", par_env$post_author), adj_post_dom, fixed = TRUE))
+      min(grep(str_c("\u203b \u7de8\u8f2f: ", par_env$post_author), adj_post_dom, fixed = TRUE))
   }
 
   start_pos <- f2_pos

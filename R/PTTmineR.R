@@ -93,7 +93,7 @@ PTTmineR <- R6::R6Class(
       corpus_size = NA
     ),
     .helper_obj = list(
-      f2_sep_term = "※ 發信站: 批踢踢實業坊(ptt.cc)",
+      f2_sep_term = "\u203b \u767c\u4fe1\u7ad9: \u6279\u8e22\u8e22\u5be6\u696d\u574a(ptt.cc)",
       r_list_sep = "<div class=\"r-list-sep\"></div>",
       ptt_short_url = "https://www.ptt.cc",
       ptt_long_url = "https://www.ptt.cc/bbs"
