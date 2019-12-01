@@ -22,6 +22,7 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
   # the interator to get post id
   for (i in for_count_max) {
 
+    miner_env$private$.spinner$mine_monkey$spin(template = "{spin}PTTmineR mining from ptt on your setting ...")
     index_req <- GET(index_page_url, set_cookies(`over18` = 1L))
     if (index_req$status_code == 404) {
       abort("PTTmineR can't enter into the index page. Please check if your settings are appropriate.",
@@ -50,6 +51,7 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
     if (identical(add_post_id, character(0))) {
       # no result searching
       cnd_break <- TRUE
+      miner_env$private$.spinner$mine_monkey$finsh()
       cli_alert_danger("There're no result on your search! pls try again!")
       break
     } else {
@@ -58,7 +60,6 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
       if (identical(add_post_id, character(0))) next
     }
 
-    miner_env$private$.spinner$mine_monkey$spin(template = "{spin}PTTmineR mining from ptt on your setting ...")
 
     # parallel excution
     tmp_post_result <- future_pmap(list(post.id = add_post_id),
