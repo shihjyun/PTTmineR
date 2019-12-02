@@ -177,6 +177,8 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
   if (!is.character(update.post.id))
     abort_bad_argument("update.post.id", must = "be character", not = update.post.id)
 
+  update_post_id <- update.post.id
+
   origin_set <- getOption("warn")
   options(warn = -1)
 
