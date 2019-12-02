@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # PTTmineR <img src="man/figures/logo.svg" align="right" alt="" width="120" />
 
-簡單、快速地爬取 PTT 上的資料，讓使用者能更專注在分析工作上！
+簡單、快速地爬取 PTT 上的資料，讓使用者更能專注在分析工作上！
 
 ## Why `PTTmineR` ?
 - 友善使用者的語意化使用方式
@@ -51,7 +51,7 @@ rookie_miner
 接下來的任何操作都不需要再用到 `<-` 或是 `=` 綁定名字到物件上(除非你需要再創建新的 miner 物件)，
 原因是在 `PTTmineR` 套件的設計上有 **Reference Semantics** 的特性，所以接下來所操作的 function 都會是
  side-effect function，對這部分不理解的話並不會影響套件的使用，有興趣的話可以參考之後的技術文件會更深入說明，
-而現在你只需要透過接下來的範例知道爬到的資料最後都到了哪裡就好了 😁！
+而現在你只需要透過接下來的範例知道爬到的資料最後都到了哪裡就好了！
 
 ### 使用 `mine_ptt()` 獲得資料
 
@@ -154,10 +154,85 @@ rookie_miner %>%
 
 rookie_miner
 
+#> *** PTTMINER ***
+#> * task name: Mr. Meeseeks
+#> * total posts: 192
+#> * total comments: 8406
+#> * miner's size: 1.89 MB
+#> * last crawling date time: 2019-12-02 16:52:23
+
 ```
 
 
 ### 使用 `plan(multiprocess)` 進行平行爬取
 
-如果沒有做特別設定的話，R 都是以單執行緒來進行爬取作業，如果要做大量的爬取，可能會非常花時間，但
+如果沒有做特別設定的話，R 都是以單執行緒來進行爬取作業，如果要做大量的爬取，可能會非常花時間，
+所以 `PTTmineR` 使用平行爬取來解決這個問題，要使用平行爬取非常簡單，只需執行：
+```{r eval=FALSE}
+plan(multiprocess) # from `future` package
+```
+從以下測試(8 cores)可以感受到平行爬取的高效率，但實際情況還是會跟設備等級/網路速度有關，
+使用者可以依照自己主機/網路的情形來決定要不要進行平行爬取，待爬取任務結束後建議可以使用`plan(sequential)`
+將沒有在工作中的 R 執行緒的記憶體釋放掉，關於平行化我會在技術文件中談論更多
+```{r eval=FALSE}
+single_miner <- PTTmineR$new(task.name = "lonely miner")
+multiple_miners <- PTTmineR$new(task.name = "unity is strength")
+
+
+plan(sequential)
+tictoc::tic()
+single_miner %>% 
+  mine_ptt(board = "Gossiping", last.n.page = 10)
+tictoc::toc()
+
+#> 🙈 PTTmineR mining from ptt on your setting ... DONE
+#> 82.83 sec elapsed sec elapsed
+
+plan(multiprocess)
+tictoc::tic()
+multiple_miners %>% 
+  mine_ptt(board = "Gossiping", last.n.page = 10)
+tictoc::toc()
+
+#> 🙈 PTTmineR mining from ptt on your setting ... DONE
+#> 24.42 sec elapsed
+```
+
+(小提醒：可以觀察🐵變換表情的頻率來約略知道爬取的速度)
+
+如果想要保存整個 miner 也十分簡單：
+```{r eval=FALSE}
+readr::write_rds(rookie_miner, "rookie_miner.RDS")
+
+rookie_miner <- readRDS("rookie_miner.RDS")
+```
+基本上可以把 miner 物件想成是一個小型資料庫，使用者可以針對各個爬取主題輕鬆進行管理
+
+## Questions
+
+### Q : 一些推文的 ip/時間 有 `NA` 的情形是？
+
+- 有些板並沒有顯示推文 ip
+- 有些文章作者在回文編輯時會不小心動到其他推文的格式
+
+目前無法處理這種情況
+
+### Q : 推文沒顯示年分，你的年份怎麼來的？
+
+這部分先可以參考 `PTTmineR` 時間處理函數的[註解](https://github.com/shihjyun/PTTmineR/blob/master/R/time-helper.R)，
+目前可以簡單解決推文跨年份的問題，但還是有極小機率判斷錯誤，之後會於其他技術文件中說明
+
+### Q : 有爬不了的文章嗎？
+
+有的！像是[這種](https://www.ptt.cc/bbs/Gossiping/M.1574656085.A.287.html)整個沒有基本資料的文章，基本上這種文章
+`PTTmineR`會記錄在錯誤區然後跳過。目前包括新舊文章，應該可以處理 99% 的狀況，之後的技術文件會說明
+目前已經處理了那些狀況
+
+### Q : 會加入分析的功能嗎？
+
+不會，`PTTmineR`的工作就是專注在爬取資料
+
+因為目前還是開發版本，難免會有不完美的地方，有一些東西(測試、文件)我還會補得更齊全，
+如果發現 bug 或是有其他相關問題建議，歡迎在 issue 中跟我說，中英都很歡迎！
+
 
