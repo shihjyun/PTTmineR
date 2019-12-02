@@ -241,7 +241,13 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
   origin_set <- getOption("warn")
   options(warn = -1)
 
-  root_miner_env$private$.meta_obj$last_crawl_date <- Sys.time()
+  root_miner_env$private$.meta_obj$last_crawl_date <-
+    Sys.time()
+  root_miner_env$private$.meta_obj$total_comments <-
+    nrow(root_miner_env$self$result_dt$post_comment_dt)
+  root_miner_env$private$.meta_obj$corpus_size <-
+    prettyunits::pretty_bytes(lobstr::obj_size(root_miner_env))
+
   root_miner_env$private$.spinner$update_runner$spin(template = "{spin}PTTmineR updating the posts you chose ... DONE")
 }
 
