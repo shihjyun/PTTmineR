@@ -1,5 +1,5 @@
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr group_nest left_join
+#' @importFrom dplyr group_nest left_join rename
 
 export_dt <- function(obj.name, miner.env){
 
