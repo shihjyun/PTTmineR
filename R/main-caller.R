@@ -173,6 +173,7 @@ mine_ptt <- function(ptt.miner,
 #' @importFrom data.table rbindlist
 #' @export
 update_ptt <- function(ptt.miner, update.post.id = character()) {
+  update_post_id <- update.post.id
   # check arguments are correct type
   if (!is.character(update.post.id))
     abort_bad_argument("update.post.id", must = "be character", not = update.post.id)
@@ -231,6 +232,7 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
       update_com_set
     ))
   root_miner_env$private$.spinner$update_runner$spin(template = "{spin}PTTmineR updating the posts you chose ... DONE")
+  root_miner_env$private$.meta_obj$last_crawl_date <- Sys.time()
 }
 
 
