@@ -78,12 +78,12 @@ PTTmineR <- R6::R6Class(
     #' @description
     #' print the summary information of PTTmineR object
     print = function(){
-      cli_rule(center = " * PTTMINER * ")
+      cli_text(" *** PTTMINER *** ")
       cli_li("task name: {private$.meta_obj$task_name}")
       cli_li("total posts: {private$.meta_obj$total_posts}")
       cli_li("total comments: {private$.meta_obj$total_comments}")
       cli_li("miner's size: {private$.meta_obj$corpus_size}")
-      cli_li("last crawling date: {private$.meta_obj$last_crawl_date}")
+      cli_li("last crawling date time: {private$.meta_obj$last_crawl_date}")
     }
 
   ),
