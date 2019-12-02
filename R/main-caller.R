@@ -177,6 +177,9 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
   if (!is.character(update.post.id))
     abort_bad_argument("update.post.id", must = "be character", not = update.post.id)
 
+  origin_set <- getOption("warn")
+  options(warn = -1)
+
   # actually ptt.miner is lhs in pipe
   chain_env <- find_env("chain_parts")
 
@@ -230,6 +233,13 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
       root_miner_env$self$result_dt$post_comment_dt,
       update_com_set
     ))
+
+  root_miner_env$self$result_dt$post_comment_dt <- na.omit(root_miner_env$self$result_dt$post_comment_dt, cols="push_type")
+
+  origin_set <- getOption("warn")
+  options(warn = -1)
+
+  root_miner_env$private$.meta_obj$last_crawl_date <- Sys.time()
   root_miner_env$private$.spinner$update_runner$spin(template = "{spin}PTTmineR updating the posts you chose ... DONE")
 }
 
