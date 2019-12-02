@@ -231,7 +231,7 @@ rookie_miner <- readRDS("rookie_miner.RDS")
 
 不會，`PTTmineR`的工作就是專注在爬取資料
 
-#### 真正的資料在哪裡？
+### Q : 真正的資料在哪裡？
 
 其實爬下來的資料都是存放在 miner 物件中，但會有額外 `export_ptt()` 的設計是希望使用者盡量不要去修改到 miner
 物件中的原始資料
