@@ -141,7 +141,7 @@ mine_ptt <- function(ptt.miner,
       get_all_posts(last.n.page = last.n.page, min.date = min.date, miner.env = root_miner_env)
 
 
-    root_miner_env$private$.meta_obj$last_crawl_date <- Sys.Date()
+    root_miner_env$private$.meta_obj$last_crawl_date <- Sys.time()
     root_miner_env$private$.meta_obj$total_posts <-
       nrow(root_miner_env$self$result_dt$post_info_dt)
     root_miner_env$private$.meta_obj$total_comments <-
