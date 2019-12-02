@@ -16,7 +16,6 @@ LazyData: true
 RoxygenNote: 7.0.1
 Imports: 
     R6,
-    cli,
     data.table,
     dplyr,
     furrr,
@@ -33,3 +32,5 @@ Imports:
     tibble,
     stats,
     future
+Remotes: 
+    r-lib/cli
