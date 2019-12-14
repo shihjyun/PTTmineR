@@ -57,7 +57,7 @@ rookie_miner
 
 在 `mine_ptt()` function 中除了 `ptt.miner` 需輸入剛剛創建 miner 變數外，也可以輸入一下參數：
 
-- `board` : 字串，必填，你想要爬的板 e.g. Gossiping, Beaudy, HatePolitics
+- `board` : 字串，必填，你想要爬的板 e.g. Gossiping, Beauty, HatePolitics
 - `keyword` : 字串，選填，在板中透過標題關鍵字搜尋
 - `author` : 字串，選填，在板中透過文章作者搜尋
 - `recommend` : 數字，選填，在板中透過文章淨推文搜尋
