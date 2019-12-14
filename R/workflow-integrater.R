@@ -38,7 +38,9 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
     if (str_detect(index_page_url, str_c(target_board, "/", "$"))) {
       r_list_sep <- miner_env$private$.helper_obj$r_list_sep # get from pttminer
       end_pos <- min(which(grepl(r_list_sep,as.character(main_container), fixed = TRUE))) - 1L
-      main_container <- main_container[1L:end_pos]
+      if (!is.infinite(end_pos)) {
+        main_container <- main_container[1L:end_pos]
+      }
     }
 
     add_post_id <- main_container %>%
