@@ -200,7 +200,7 @@ update_ptt <- function(ptt.miner, update.post.id = character()) {
   # check update_post_id are within ptt.miner
   update_pos <-
     (root_miner_env$self$result_dt$post_info_dt$post_id) %in% update_post_id
-  if (any(!update_pos)) {
+  if (any(!(update_post_id %in% root_miner_env$self$result_dt$post_info_dt$post_id))) {
     abort(
       "The posts' id you selected is not within in PTTmineR. Please check if the posts'
           id you selected are stored in PTTmineR."
