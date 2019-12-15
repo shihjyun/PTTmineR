@@ -31,6 +31,5 @@ Imports:
     stringr,
     tibble,
     stats,
-    future
-Remotes: 
-    r-lib/cli
+    future,
+    cli (>= 2.0)
