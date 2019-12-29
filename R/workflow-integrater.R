@@ -3,6 +3,7 @@
 #' @importFrom stringr str_detect str_match
 #' @importFrom rvest html_attr
 #' @importFrom furrr future_pmap
+#' @importFrom future.apply future_lapply
 #' @importFrom purrr transpose walk
 #' @importFrom data.table set
 #' @importFrom stats na.omit
@@ -62,12 +63,17 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
       if (identical(add_post_id, character(0))) next
     }
 
+    miner_env_pri <- miner_env$private
 
     # parallel excution
-    tmp_post_result <- future_pmap(list(post.id = add_post_id),
-                                   ~ get_post_dt(post.id = .x,
-                                                 miner.env = miner_env$private,
-                                                 min.date = min_date)) %>%
+
+    tmp_post_result <- future_lapply(add_post_id,
+                                     FUN = local(get_post_dt),
+                                     future.globals = c("add_post_id",
+                                                        "min_date",
+                                                        "miner_env_pri"),
+                                     miner.env = miner_env_pri,
+                                     min.date = min_date) %>%
       transpose()
 
 
