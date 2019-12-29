@@ -40,11 +40,11 @@ rookie_miner <- PTTmineR$new(task.name = "Mr. Meeseeks")
 # inspect your miner's metadata
 rookie_miner
 #> *** PTTMINER ***
-#> * task name: Mr. Meeseeks
-#> * total posts: NA
-#> * total comments: NA
-#> * miner's size: NA
-#> * last crawling date time: NA
+#> ● task name: Mr. Meeseeks
+#> ● total posts: NA
+#> ● total comments: NA
+#> ● miner's size: NA
+#> ● last crawling date time: NA
 ```
 
 接下來的任何操作都不需要再用到 `<-` 或是 `=` 綁定名字到物件上(除非你需要再創建新的 miner 物件)， 原因是在
@@ -164,8 +164,11 @@ rookie_miner
 使用平行爬取來解決這個問題，要使用平行爬取非常簡單，只需執行：
 
 ``` r
-plan(multiprocess) # from `future` package
+plan(multiprocess(workers = 8, gc = TRUE)) # from `future` package
 ```
+
+`worker`代表著想要使用的執行續數量可以依照配備的狀況作調整，而`gc`建議都設定為`TRUE`，它可以在爬行時幫大家有規律地啟動 R
+的記憶體釋放機制，釋放已經沒有用處的記憶體
 
 從以下測試(8 cores)可以感受到平行爬取的高效率，但實際情況還是會跟設備等級/網路速度有關，
 使用者可以依照自己主機/網路的情形來決定要不要進行平行爬取，待爬取任務結束後建議可以使用`plan(sequential)`
@@ -185,7 +188,7 @@ tictoc::toc()
 #> 🙈 PTTmineR mining from ptt on your setting ... DONE
 #> 82.83 sec elapsed sec elapsed
 
-plan(multiprocess)
+plan(multiprocess(workers = 8, gc = TRUE))
 tictoc::tic()
 multiple_miners %>% 
   mine_ptt(board = "Gossiping", last.n.page = 10)
