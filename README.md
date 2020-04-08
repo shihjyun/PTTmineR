@@ -10,7 +10,7 @@
   - 友善使用者的語意化使用方式
   - 整合多種 PTT 文章搜尋方式
   - 內部高效率的資料處理( `data.table` )
-  - 支持平行運算( `futrue` )
+  - 支持平行運算( `future` )
 
 ## Installation
 
