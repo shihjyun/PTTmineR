@@ -147,7 +147,7 @@ mine_ptt <- function(ptt.miner,
     root_miner_env$private$.meta_obj$total_comments <-
       nrow(root_miner_env$self$result_dt$post_comment_dt)
     root_miner_env$private$.meta_obj$corpus_size <-
-      prettyunits::pretty_bytes(lobstr::obj_size(root_miner_env))
+      prettyunits::pretty_bytes(as.numeric(lobstr::obj_size(root_miner_env)))
 
     on.exit({
       options(warn = origin_set)

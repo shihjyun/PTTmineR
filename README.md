@@ -10,7 +10,7 @@
   - 友善使用者的語意化使用方式
   - 整合多種 PTT 文章搜尋方式
   - 內部高效率的資料處理( `data.table` )
-  - 支持平行運算( `futrue` )
+  - 支持平行運算( `future` )
 
 ## Installation
 
@@ -40,11 +40,11 @@ rookie_miner <- PTTmineR$new(task.name = "Mr. Meeseeks")
 # inspect your miner's metadata
 rookie_miner
 #> *** PTTMINER ***
-#> ● task name: Mr. Meeseeks
-#> ● total posts: NA
-#> ● total comments: NA
-#> ● miner's size: NA
-#> ● last crawling date time: NA
+#> * task name: Mr. Meeseeks
+#> * total posts: NA
+#> * total comments: NA
+#> * miner's size: NA
+#> * last crawling date time: NA
 ```
 
 接下來的任何操作都不需要再用到 `<-` 或是 `=` 綁定名字到物件上(除非你需要再創建新的 miner 物件)， 原因是在
