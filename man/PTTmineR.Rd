@@ -37,6 +37,7 @@ users to manage the data they crawl on each crawling task.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 overrides the default behaviour of \verb{$new()}
 \subsection{Usage}{
@@ -53,6 +54,7 @@ overrides the default behaviour of \verb{$new()}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 print the summary information of PTTmineR object
 \subsection{Usage}{
@@ -62,6 +64,7 @@ print the summary information of PTTmineR object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

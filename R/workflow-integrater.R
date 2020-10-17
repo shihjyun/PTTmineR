@@ -67,7 +67,7 @@ get_all_posts <- function(index.page.url, last.n.page, min.date, miner.env) {
 
     # parallel excution
 
-    tmp_post_result <- future_lapply(add_post_id,
+    tmp_post_result <- future.apply::future_lapply(add_post_id,
                                      FUN = local(get_post_dt),
                                      future.globals = c("add_post_id",
                                                         "min_date",
